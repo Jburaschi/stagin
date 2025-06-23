@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Go Vial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    nav {
+      background-color: #1e1e2f;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      color: white;
+      padding: 100px 20px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url('img/obra1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      z-index: -1;
+      filter: brightness(0.5);
+      animation: zoomIn 20s infinite alternate ease-in-out;
+    }
+
+    @keyframes zoomIn {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.05);
+      }
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      font-weight: bold;
+    }
+
+    .hero p {
+      font-size: 1.3em;
+      margin: 10px 0 30px;
+    }
+
+    .hero button {
+      background-color: red;
+      border: none;
+      padding: 15px 30px;
+      color: white;
+      font-size: 1em;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
+    /* Flecha abajo en hero */
+    .down-arrow {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: pointer;
+      z-index: 10;
+      background: white;
+      border-radius: 50%;
+      padding: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .down-arrow:hover {
+      transform: translateX(-50%) translateY(5px);
+    }
+
+    /* NUEVA SECCIÓN SERVICIOS MINIMALISTA */
+    .services-minimal {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    .service {
+      text-align: center;
+      max-width: 260px;
+    }
+    .service .icon {
+      font-size: 50px;
+      color: #d32f2f;
+      margin-bottom: 15px;
+    }
+    .service h3 {
+      font-weight: 700;
+      font-size: 1.6em;
+      margin-bottom: 10px;
+      color: #111;
+    }
+    .service p {
+      font-weight: 400;
+      font-size: 1em;
+      color: #444;
+    }
+
+    /* Otras secciones del sitio */
+
+    .empresa {
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .empresa h2 {
+      font-size: 2em;
+      color: #1e1e2f;
+      margin-bottom: 20px;
+    }
+
+    .galeria {
+      max-width: 1000px;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .galeria img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.4s ease;
+    }
+
+    .galeria img:hover {
+      transform: scale(1.05);
+    }
+
+    .contacto {
+      background-color: #fff;
+      padding: 40px 20px;
+      max-width: 600px;
+      margin: 60px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .contacto h2 {
+      margin-bottom: 20px;
+      color: red;
+      text-align: center;
+    }
+
+    .contacto form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .contacto input,
+    .contacto textarea {
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .contacto button {
+      background-color: #1e1e2f;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .whatsapp-float img {
+      width: 60px;
+      height: 60px;
+    }
+
+    /* Flecha arriba */
+    .top-arrow {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      cursor: pointer;
+      z-index: 999;
+      background: white;
+      border-radius: 50%;
+      padding: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-arrow:hover {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+      }
+      .services-minimal {
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: 2em;
+      }
+      .hero p {
+        font-size: 1em;
+      }
+      .galeria {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Go Vial</div>
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#empresa">La Empresa</a></li>
+      <li><a href="#servicios">Nuestros Servicios</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <h1>Movimientos confiables</h1>
+    <p>Bienvenidos a Go vial</p>
+    <button onclick="location.href='#contacto'">Contáctenos</button>
+
+    <!-- Flecha abajo -->
+    <div class="down-arrow" onclick="window.scrollTo({ top: window.innerHeight * 0.95, behavior: 'smooth' })" aria-label="Más información abajo" role="button" tabindex="0">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="red" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="36px" height="36px">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SERVICIOS: ESTILO MINIMALISTA -->
+  <section class="services-minimal" id="servicios">
+    <div class="service">
+      <div class="icon">🏅</div>
+      <h3>Calidad</h3>
+      <p>Maquinaria moderna y expertos en movimientos</p>
+    </div>
+    <div class="service">
+      <div class="icon">🤝</div>
+      <h3>Responsabilidad</h3>
+      <p>Cumplimos plazos y cuidamos cada detalle</p>
+    </div>
+    <div class="service">
+      <div class="icon">✔</div>
+      <h3>Garantía</h3>
+      <p>Nuestra experiencia asegura resultados</p>
+    </div>
+  </section>
+
+  <!-- EMPRESA -->
+  <section class="empresa" id="empresa">
+    <h2>Sobre Nosotros</h2>
+    <p>Soil Obras & Servicios es una empresa dedicada al movimiento de suelo, alquiler de maquinaria y ejecución de obras civiles. Con años de experiencia en el rubro, nos destacamos por nuestro compromiso, seriedad y calidad en cada proyecto.</p>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="galeria" id="galeria">
+    <img src="img/obra1.jpg" alt="Obra 1" />
+    <img src="img/pexels-jmarc-sire-306411934-19292146.jpg" alt="Obra 2" />
+    <img src="img/pexels-kun-fayakun-1238181416-29369783.jpg" alt="Obra 3" />
+    <img src="img/pexels-tayssir-kadamany-3674523-30088762.jpg" alt="Obra 4" />
+    <img src="img/pexels-trupert-25559747.jpg" alt="Obra 5" />
+    <img src="https://via.placeholder.com/300x200?text=Obra+6" alt="Obra 6" />
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="contacto" id="contacto">
+    <h2>Contacto</h2>
+    <form>
+      <input type="text" placeholder="Nombre completo" required />
+      <input type="email" placeholder="Correo electrónico" required />
+      <textarea rows="5" placeholder="Escribí tu mensaje..." required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <!-- WHATSAPP -->
+  <div class="whatsapp-float">
+    <a href="https://wa.me/5491123456789" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp" />
+    </a>
+  </div>
+
+  <!-- FLECHA ARRIBA -->
+  <div class="top-arrow" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Ir arriba" role="button" tabindex="0">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="red" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="36px" height="36px" style="transform: rotate(180deg);">
+      <path d="M6 9l6 6 6-6"/>
+    </svg>
+  </div>
+
+</body>
+</html>
